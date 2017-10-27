@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build",
-    "build": "webpack -d  && cp src/index.html dist/index.html && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback --port 5000",
+    "build": "webpack -d  && cp src/index.html dist/index.html && webpack-dev-server --content-base src/ --inline --hot --port 8080",
     "build:prod": "webpack -p  && cp src/index.html dist/index.html"
   },
   "keywords": [
@@ -16,7 +16,8 @@
   "dependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-router": "^3.2.0"
+    "react-router": "^3.2.0",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
