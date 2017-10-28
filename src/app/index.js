@@ -1,49 +1,11 @@
-// import React from "react";
-// import { render } from "react-dom";
-//
-// import { User } from "./components/User";
-// import { Main } from "./components/Main";
-//
-// class App extends React.Component {
-//
-//     constructor(){
-//         super();
-//         this.state = {
-//             username: "Max"
-//         }
-//     }
-//
-//     changeUsername(newName) {
-//         this.setState({
-//             username: newName
-//         });
-//     }
-//
-//
-//     render(){
-//
-//         return (
-//             <div className="container">
-//                 <Main changeUsername= {this.changeUsername.bind(this)}/>
-//                 <User username= {this.state.username}/>
-//             </div>
-//
-//         );
-//     }
-// }
-//
-// render(<App/>, window.document.getElementById("app"));
 
+import React from "react";
+import { render } from "react-dom";
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import logger from "redux-logger";
 import { createLogger } from "redux-logger";
+import { Provider }from "react-redux";
 
-// const initialState = {
-//     result: 1,
-//     lastValues: [],
-//     username: "Max"
-//
-// };
+import App from "./components/App";
 
 const mathReducer = (state = {
     result: 1,
@@ -74,7 +36,7 @@ const mathReducer = (state = {
 };
 
 const userReducer = (state = {
-    username: "Max",
+    name: "Max",
     age: 27
 
 }, action) => {
@@ -83,7 +45,7 @@ const userReducer = (state = {
         case "SET_NAME":
             state = {
                 ...state,
-                username: action.payload
+                name: action.payload
             };
             break;
 
@@ -103,41 +65,19 @@ const myLogger = (store) => (next) => (action) => {
   next(action);
 };
 
-const store = createStore(combineReducers({mathReducer, userReducer}), {}, applyMiddleware( createLogger()));
+const store = createStore(combineReducers({math: mathReducer, user: userReducer}), {}, applyMiddleware( createLogger()));
 
 store.subscribe(() => {
    // console.log("Store Updated: ", store.getState());
 });
 
-store.dispatch({
-    type: "ADD",
-    payload: 10
-});
 
-store.dispatch({
-    type: "ADD",
-    payload: 25
-});
-
-store.dispatch({
-    type: "ADD",
-    payload: 40
-});
-
-store.dispatch({
-    type: "SUBTRACT",
-    payload: 7
-});
-
-store.dispatch({
-    type: "SET_AGE",
-    payload: 30
-});
-
-store.dispatch({
-    type: "SET_NAME",
-    payload: "WAL"
-});
+ render(
+     <Provider store= {store}>
+         <App/>
+     </Provider>,
+     window.document.getElementById("app")
+ );
 
 
 
